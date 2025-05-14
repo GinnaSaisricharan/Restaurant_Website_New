@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reserve Your Table</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background: linear-gradient(to right, #ffe5ec, #ffc2d1);
+      max-width: 750px;
+      margin: 50px auto;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      border: 2px solid #fff;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .restaurant-image {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #e91e63;
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #c2185b;
+    }
+
+    .booking-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+
+    .booking-table th, .booking-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .booking-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    #confirmation {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reserve Your Table</h1>
+
+    <form id="bookingForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" required>
+
+      <label for="time">Time:</label>
+      <input type="time" id="time" required>
+
+      <label for="guests">Number of Guests:</label>
+      <input type="number" id="guests" min="1" required>
+
+      <label for="reservationType">Reservation Type:</label>
+      <select id="reservationType">
+        <option value="Standard">Standard</option>
+        <option value="Full Restaurant">Full Restaurant Booking</option>
+      </select>
+
+      <button type="submit">Book Now</button>
+    </form>
+
+    <h2>Current Bookings:</h2>
+    <table class="booking-table" id="bookingTable">
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Guests</th>
+        <th>Type</th>
+      </tr>
+      <tr>
+        <td>SaiSriCharan</td>
+        <td>2025-04-21</td>
+        <td>7:00 PM</td>
+        <td>2 Guests</td>
+        <td>Standard</td>
+      </tr>
+      <tr>
+        <td>Shashank</td>
+        <td>2025-04-22</td>
+        <td>6:30 PM</td>
+        <td>4 Guests</td>
+        <td>Standard</td>
+      </tr>
+    </table>
+
+    <div id="confirmation" class="hidden"></div>
+  </div>
+
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const guests = document.getElementById("guests").value;
+      const type = document.getElementById("reservationType").value;
+
+      const table = document.getElementById("bookingTable");
+      const newRow = table.insertRow(-1);
+
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+      const cell4 = newRow.insertCell(3);
+      const cell5 = newRow.insertCell(4);
+
+      cell1.textContent = name;
+      cell2.textContent = date;
+      cell3.textContent = formatTime(time);
+      cell4.textContent = (type === "Full Restaurant") ? "All Guests" : guests + " Guests";
+      cell5.textContent = type;
+
+      document.getElementById("bookingForm").reset();
+
+      const confirmation = document.getElementById("confirmation");
+      confirmation.textContent = "Reservation successfully added!";
+      confirmation.classList.remove("hidden");
+    });
+
+    function formatTime(time) {
+      const [hour, minute] = time.split(":");
+      const h = parseInt(hour);
+      const ampm = h >= 12 ? "PM" : "AM";
+      const formattedHour = h % 12 === 0 ? 12 : h % 12;
+      return `${formattedHour}:${minute} ${ampm}`;
+    }
+  </script>
+</body>
+</html>

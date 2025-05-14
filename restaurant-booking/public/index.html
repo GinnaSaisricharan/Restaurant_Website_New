@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reserve Your Table</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="https://images.unsplash.com/photo-1555992336-03a23c42d76d" alt="Restaurant" class="restaurant-image">
+    <h1>Reserve Your Table</h1>
+    <form id="bookingForm" action="/book" method="POST">
+      <input type="text" name="name" required placeholder="Full Name">
+      <input type="date" name="date" required>
+      <input type="time" name="time" required>
+      <input type="number" name="guests" required min="1" placeholder="Number of Guests">
+      <select name="reservationType">
+        <option value="Standard">Standard</option>
+        <option value="Full Restaurant">Full Restaurant Booking</option>
+      </select>
+      <input type="email" name="email" required placeholder="Email">
+      <input type="text" name="phone" required placeholder="Phone Number">
+      <button type="submit">Book Now</button>
+    </form>
+  </div>
+</body>
+</html>
